@@ -175,7 +175,13 @@ function segbloco(){
     KF=`<span class="est e-conf">Meta Ads</span>atribuídos aos anúncios · dia fechado`;
     let sub='', cls='nu';
     if(ant){const d=ont.seguidores-ant.seguidores;sub=`${d>0?'▲':d<0?'▼':''} ${sgn(d)} vs ${dd(ant.data)} (foram ${int(ant.seguidores)})`;cls=d>0?'up':d<0?'dn':'nu';}
-    h+=kpi('Novos seguidores em '+dd(ont.data),int(ont.seguidores),sub,cls);
+    const enc=D.totais.fim<D.lido_em;
+    h+=kpi('Novos seguidores em '+dd(ont.data)+(enc?' (último dia no ar)':''),int(ont.seguidores),sub,cls);
+    if(enc){
+      KF=`<span class="est e-conf">Meta Ads</span>conta lida em ${dd(D.lido_em)}`;
+      const q=new Date(D.totais.fim+'T12:00:00');q.setDate(q.getDate()+1);
+      h+=kpi('Hoje ('+dd(D.lido_em)+'): anúncios no ar','0','R$ 0,00 investidos desde '+dd(q.toISOString().slice(0,10))+' (campanha encerrada)','nu');
+    }
   }
   if(hj){
     KF=`<span class="est e-parc">dia parcial</span>atribuídos aos anúncios · lido ${dd(D.lido_em)}`;
